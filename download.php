@@ -1,10 +1,15 @@
 <?php
 require 'clean.php';
-header('Content-type: application/x-bzip2');
+$file = clean($_GET['file']);
 
-$file = $_GET['file'];
+if(file_exists('/backup/' . $file)){
+    header('Content-type: application/x-bzip2');
 
-header('Content-disposition: attachment; filename="'.clean($file).'"');
+    header('Content-disposition: attachment; filename="'. $file.'"');
 
-readfile('/backup/'.clean($file));
+    readfile('/backup/'. $file);
+}else{
+    header('Location: index.php');
+    exit();
+}
 ?>
